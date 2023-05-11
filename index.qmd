@@ -4,21 +4,114 @@ format: revealjs
 editor: visual
 ---
 
-## Quarto
+# Book club
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+This is a slide deck summary of [R for Clinical Study Reporting and Submission](https://r4csr.org/)
 
-## Bullets
+There are two main parts
 
-When you click the **Render** button a document will be generated that includes:
+1.  TLFs: a simulation of individual contributions
 
--   Content authored with markdown
--   Output from executable code
+2.  Clinical trial projects: a simulation of project leadership
 
-## Code
+[Join us!](https://datascience.arizona.edu/events/r-clinical-study-reporting)
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Preface
+
+-   R folder structure recommended
+
+-   [CDISC pilot data](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets) will be used
+
+-   R packages needed
 
 ```{r}
-1 + 1
+#| eval: false
+#| echo: true
+
+install.packages(c(
+                    "dplyr"   # Manipulate data
+                  , "r2rtf" # Reporting in RTF format
+                  , "tidyr" # Manipulate data
+                       ))
 ```
+
+## Living list of acronyms {.scrollable}
+
+| Type                   | Acronym | Definition/Explanation                                            |
+|------------|-------------|------------------------------------------------------|
+| clinical               | CSR     | Clinical study report                                             |
+| clinical               | SDTM    | standard data tabulation model                                    |
+| clinical               | ADaM    | Analysis dataset model                                            |
+| clinical               | TLFs    | Tables, listings, and figures                                     |
+| clinical               | A&R     | Analysis and reporting                                            |
+| clinical/computational | eCTD    | Electronic common technical document                              |
+| clinical               | CDISC   | Clinical Data Interchange Standards Consortium                    |
+| clinical               | ICH     | International conference on harmonization                         |
+| clinical               | ICH E3  | ICH guidelines on structure and content of clinical study reports |
+| computational          | RTF     | Rich text format                                                  |
+| clinical               | adae    | Analysis dataset for adverse events                               |
+|                        |         |                                                                   |
+|                        |         |                                                                   |
+
+# TLFs {style="text-align: center;"}
+
+# Chapter 1
+
+An overview of clinical study reports and the {r2rtf} package.
+
+## Overview
+
+-   A CSR contains all methods and results of a study in \~16 sections
+
+    -   TLFs are found in 10-12, 14, 16, +
+
+-   often word document format
+
+    -   in this book we explore RTF
+
+-   The {r2rtf} package allows for the creation and export of publication quality tables and figures in rich text format
+
+    -   Use the included `r2rtf_adae` dataset to explore functions in {r2rtf}
+
+## r2rtf
+
+After formatting your data as desired by {r2rtf}, a general workflow is as follows:
+
+```{r}
+#| echo: true
+#| eval: false
+
+head(tbl) %>%
+  rtf_body() %>% # Step 1 Add table attributes
+  rtf_encode() %>% # Step 2 Convert attributes to RTF encode
+  write_rtf("tlf/intro-ae1.rtf") # Step 3 Write to a .rtf file
+```
+
+Each table attribute is added individually, then the attributes are converted to RTF, and finally, you can export an object in RTF.
+
+## Style with r2rtf
+
+Use {r2rtf} to set specific design elements for your ouput:
+
+```{r}
+#| echo: true
+#| eval: false
+
+head(tbl) %>%
+  rtf_colheader(
+    colheader = " | Treatment",
+    col_rel_width = c(3, 6)
+  ) %>%
+  rtf_colheader(
+    colheader = "Adverse Events | Placebo | Xanomeline High Dose | Xanomeline Low Dose",
+    border_top = c("", "single", "single", "single"),
+    col_rel_width = c(3, 2, 2, 2)
+  ) %>%
+  rtf_body(col_rel_width = c(3, 2, 2, 2)) %>%
+  rtf_encode() %>%
+  write_rtf("tlf/intro-ae7.rtf")
+```
+
+A single {r2rtf} command may include columns, borders, headers, width designations and many other elements.
+
+# Clinical Trial Project {style="text-align: center;"}

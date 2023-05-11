@@ -27,6 +27,70 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -326,26 +390,176 @@
   <h1 class="title">R4CSR</h1>
 </section>
 
-<section id="quarto" class="slide level2">
-<h2>Quarto</h2>
-<p>Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <a href="https://quarto.org/docs/presentations/" class="uri">https://quarto.org/docs/presentations/</a>.</p>
+<section>
+<section id="book-club" class="title-slide slide level1 center">
+<h1>Book club</h1>
+<p>This is a slide deck summary of <a href="https://r4csr.org/">R for Clinical Study Reporting and Submission</a></p>
+<p>There are two main parts</p>
+<ol type="1">
+<li><p>TLFs: a simulation of individual contributions</p></li>
+<li><p>Clinical trial projects: a simulation of project leadership</p></li>
+</ol>
+<p><a href="https://datascience.arizona.edu/events/r-clinical-study-reporting">Join us!</a></p>
 </section>
-<section id="bullets" class="slide level2">
-<h2>Bullets</h2>
-<p>When you click the <strong>Render</strong> button a document will be generated that includes:</p>
+<section id="preface" class="slide level2">
+<h2>Preface</h2>
 <ul>
-<li>Content authored with markdown</li>
-<li>Output from executable code</li>
+<li><p>R folder structure recommended</p></li>
+<li><p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets">CDISC pilot data</a> will be used</p></li>
+<li><p>R packages needed</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
+<span id="cb1-2"><a href="#cb1-2"></a>                    <span class="st">"dplyr"</span>   <span class="co"># Manipulate data</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>                  , <span class="st">"r2rtf"</span> <span class="co"># Reporting in RTF format</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>                  , <span class="st">"tidyr"</span> <span class="co"># Manipulate data</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>                       ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="living-list-of-acronyms" class="slide level2 scrollable">
+<h2>Living list of acronyms</h2>
+<table>
+<colgroup>
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Acronym</th>
+<th>Definition/Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>clinical</td>
+<td>CSR</td>
+<td>Clinical study report</td>
+</tr>
+<tr class="even">
+<td>clinical</td>
+<td>SDTM</td>
+<td>standard data tabulation model</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>ADaM</td>
+<td>Analysis dataset model</td>
+</tr>
+<tr class="even">
+<td>clinical</td>
+<td>TLFs</td>
+<td>Tables, listings, and figures</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>A&amp;R</td>
+<td>Analysis and reporting</td>
+</tr>
+<tr class="even">
+<td>clinical/computational</td>
+<td>eCTD</td>
+<td>Electronic common technical document</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>CDISC</td>
+<td>Clinical Data Interchange Standards Consortium</td>
+</tr>
+<tr class="even">
+<td>clinical</td>
+<td>ICH</td>
+<td>International conference on harmonization</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>ICH E3</td>
+<td>ICH guidelines on structure and content of clinical study reports</td>
+</tr>
+<tr class="even">
+<td>computational</td>
+<td>RTF</td>
+<td>Rich text format</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>adae</td>
+<td>Analysis dataset for adverse events</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section id="tlfs" class="title-slide slide level1 center" style="text-align: center;">
+<h1>TLFs</h1>
+
+</section>
+
+<section>
+<section id="chapter-1" class="title-slide slide level1 center">
+<h1>Chapter 1</h1>
+<p>An overview of clinical study reports and the {r2rtf} package.</p>
+</section>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<ul>
+<li><p>A CSR contains all methods and results of a study in ~16 sections</p>
+<ul>
+<li>TLFs are found in 10-12, 14, 16, +</li>
+</ul></li>
+<li><p>often word document format</p>
+<ul>
+<li>in this book we explore RTF</li>
+</ul></li>
+<li><p>The {r2rtf} package allows for the creation and export of publication quality tables and figures in rich text format</p>
+<ul>
+<li>Use the included <code>r2rtf_adae</code> dataset to explore functions in {r2rtf}</li>
+</ul></li>
 </ul>
 </section>
-<section id="code" class="slide level2">
-<h2>Code</h2>
-<p>When you click the <strong>Render</strong> button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:</p>
+<section id="r2rtf" class="slide level2">
+<h2>r2rtf</h2>
+<p>After formatting your data as desired by {r2rtf}, a general workflow is as follows:</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">head</span>(tbl) <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">rtf_body</span>() <span class="sc">%&gt;%</span> <span class="co"># Step 1 Add table attributes</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">rtf_encode</span>() <span class="sc">%&gt;%</span> <span class="co"># Step 2 Convert attributes to RTF encode</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">write_rtf</span>(<span class="st">"tlf/intro-ae1.rtf"</span>) <span class="co"># Step 3 Write to a .rtf file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Each table attribute is added individually, then the attributes are converted to RTF, and finally, you can export an object in RTF.</p>
+</section>
+<section id="style-with-r2rtf" class="slide level2">
+<h2>Style with r2rtf</h2>
+<p>Use {r2rtf} to set specific design elements for your ouput:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(tbl) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">rtf_colheader</span>(</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="at">colheader =</span> <span class="st">" | Treatment"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    <span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">6</span>)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">rtf_colheader</span>(</span>
+<span id="cb3-7"><a href="#cb3-7"></a>    <span class="at">colheader =</span> <span class="st">"Adverse Events | Placebo | Xanomeline High Dose | Xanomeline Low Dose"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8"></a>    <span class="at">border_top =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"single"</span>, <span class="st">"single"</span>, <span class="st">"single"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="fu">rtf_body</span>(<span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="fu">rtf_encode</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>  <span class="fu">write_rtf</span>(<span class="st">"tlf/intro-ae7.rtf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>A single {r2rtf} command may include columns, borders, headers, width designations and many other elements.</p>
+</section></section>
+<section id="clinical-trial-project" class="title-slide slide level1 center" style="text-align: center;">
+<h1>Clinical Trial Project</h1>
 <div class="footer footer-default">
 
 </div>
