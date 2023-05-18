@@ -401,6 +401,10 @@
 </ol>
 <p><a href="https://datascience.arizona.edu/events/r-clinical-study-reporting">Join us!</a></p>
 </section>
+<section id="get-r-help-at-uarizona" class="slide level2">
+<h2>Get R help at UArizona</h2>
+<p><a href="https://datascience.arizona.edu/events/data-viz-drop-0">Data &amp; Visualization Drop-in</a> hours @ Main library</p>
+</section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
 <ul>
@@ -420,9 +424,9 @@
 <h2>Living list of acronyms</h2>
 <table>
 <colgroup>
-<col style="width: 15%">
-<col style="width: 16%">
-<col style="width: 68%">
+<col style="width: 22%">
+<col style="width: 22%">
+<col style="width: 55%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -488,14 +492,14 @@
 <td>Analysis dataset for adverse events</td>
 </tr>
 <tr class="even">
-<td></td>
-<td></td>
-<td></td>
+<td>clinical/computational</td>
+<td>ADSL</td>
+<td>Subject-level analysis dataset</td>
 </tr>
 <tr class="odd">
-<td></td>
-<td></td>
-<td></td>
+<td>clinical/computational</td>
+<td>ITT</td>
+<td>intention to treat (i.e.&nbsp;none of the patients are excluded and the patients are analyzed according to the randomization scheme)</td>
 </tr>
 </tbody>
 </table>
@@ -558,8 +562,104 @@
 </div>
 <p>A single {r2rtf} command may include columns, borders, headers, width designations and many other elements.</p>
 </section></section>
-<section id="clinical-trial-project" class="title-slide slide level1 center" style="text-align: center;">
-<h1>Clinical Trial Project</h1>
+<section>
+<section id="chapter-2" class="title-slide slide level1 center">
+<h1>Chapter 2</h1>
+<p>Section 10.1, Disposition of Participants</p>
+<blockquote>
+<p>The disposition of participants table reports the numbers of participants who were randomized, and who entered and completed each phase of the study, and the reasons for all post-randomization discontinuations, grouped by treatment and by major reason (lost to follow-up, adverse event, poor compliance, etc.) are reported.</p>
+</blockquote>
+</section>
+<section id="disposition" class="slide level2">
+<h2>Disposition</h2>
+<p>Step 1: Count participants in the analysis population</p>
+<p>Step 2: Calculate the number and percentage of participants who discontinued the study by treatment arm</p>
+<p>Step 3: Calculate the numbers and percentages of participants who discontinued the study for different reasons, by treatment arm</p>
+<p>Step 4: Calculate the number and percentage of participants who completed the study, by treatment arm</p>
+<p>Step 5: Bind <code>n_rand</code>, <code>n_disc</code>, <code>n_reason</code>, and <code>n_complete</code> by row.</p>
+<p>Step 6+: Write the final table to RTF</p>
+</section>
+<section id="disposition-of-participants-rtf" class="slide level2">
+<h2>Disposition of participants RTF</h2>
+<div class="panel-tabset">
+<ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Code</a></li><li><a href="#tabset-1-2">Comments</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>tbl_disp <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="co"># Table title</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">rtf_title</span>(<span class="st">"Disposition of Participants"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="co"># First row of column header</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">rtf_colheader</span>(<span class="st">" | Placebo | Xanomeline Low Dose| Xanomeline High Dose"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    <span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="co"># Second row of column header</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="fu">rtf_colheader</span>(<span class="st">" | n | (%) | n | (%) | n | (%)"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10"></a>    <span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">1.3</span>), <span class="dv">3</span>)),</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    <span class="at">border_top =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="fu">rep</span>(<span class="st">"single"</span>, <span class="dv">6</span>)),</span>
+<span id="cb4-12"><a href="#cb4-12"></a>    <span class="at">border_left =</span> <span class="fu">c</span>(<span class="st">"single"</span>, <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"single"</span>, <span class="st">""</span>), <span class="dv">3</span>))</span>
+<span id="cb4-13"><a href="#cb4-13"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="co"># Table body</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  <span class="fu">rtf_body</span>(</span>
+<span id="cb4-16"><a href="#cb4-16"></a>    <span class="at">col_rel_width =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="fu">rep</span>(<span class="fu">c</span>(<span class="fl">0.7</span>, <span class="fl">1.3</span>), <span class="dv">3</span>)),</span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="at">text_justification =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="fu">rep</span>(<span class="st">"c"</span>, <span class="dv">6</span>)),</span>
+<span id="cb4-18"><a href="#cb4-18"></a>    <span class="at">border_left =</span> <span class="fu">c</span>(<span class="st">"single"</span>, <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"single"</span>, <span class="st">""</span>), <span class="dv">3</span>))</span>
+<span id="cb4-19"><a href="#cb4-19"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a>  <span class="co"># Encoding RTF syntax</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>  <span class="fu">rtf_encode</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a>  <span class="co"># Save to a file</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a>  <span class="fu">write_rtf</span>(<span class="st">"tlf/tbl_disp.rtf"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2">
+<p>With our bound data we follow our <a href="#/r2rtf">workflow for {r2rtf}</a>: add attributes, convert to RTF, write out</p>
+<ul>
+<li><code>|</code> separates every item, thus line 5 denotes 4 columns and line 9, 7 cols</li>
+<li>line 6 could also read<br>
+<code>col_rel_width = c(3, 2, 2, 2)</code></li>
+<li>and line 10 could also read<br>
+<code>col_rel_width = c(3, 0.7, 1.3, 0.7, 1.3, 0.7, 1.3)</code></li>
+</ul>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="chapter-3" class="title-slide slide level1 center">
+<h1>Chapter 3</h1>
+<p>Section 11.1, Data Sets Analyzed</p>
+<blockquote>
+<p>The summary of analysis sets table reports on participants included in each efficacy analysis</p>
+</blockquote>
+</section>
+<section id="writing-functions" class="slide level2">
+<h2>Writing functions</h2>
+<blockquote>
+<p>"You should consider writing a function whenever you've copied and pasted a block of code more than twice"</p>
+<p>- <a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function">R for Data Science</a></p>
+</blockquote>
+<p><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fmt_num <span class="ot">&lt;-</span> <span class="cf">function</span>(x, digits, <span class="at">width =</span> digits <span class="sc">+</span> <span class="dv">4</span>) {</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">formatC</span>(x,</span>
+<span id="cb5-3"><a href="#cb5-3"></a>    <span class="at">digits =</span> digits,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="at">format =</span> <span class="st">"f"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="at">width =</span> width</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  )</span>
+<span id="cb5-7"><a href="#cb5-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="summary-of-analysis-sets" class="slide level2">
+<h2>Summary of analysis sets</h2>
+<p>With helper functions <code>count_by</code> and <code>fmt_num</code> we can more easily prepare the dataset for a summary of analysis sets table with the following steps:<br>
+<br>
+</p>
+<p>Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the <code>count_by()</code> function.<br>
+Step 2+: Format the output from Step 2 using r2rtf.</p>
+</section></section>
+<section id="clinical-trial-project-june-15-2023" class="title-slide slide level1 center" style="text-align: center;">
+<h1>Clinical Trial Project (June 15, 2023)</h1>
 <div class="footer footer-default">
 
 </div>
