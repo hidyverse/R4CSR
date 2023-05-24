@@ -18,7 +18,7 @@ There are two main parts
 
 ## Get R help at UArizona
 
-[Data & Visualization Drop-in](https://datascience.arizona.edu/events/data-viz-drop-0) hours @ Main library
+[Data & Visualization Drop-in](https://datascience.arizona.edu/events/data-viz-drop-0) hours \@ Main library
 
 ## Preface
 
@@ -42,7 +42,7 @@ install.packages(c(
 ## Living list of acronyms {.scrollable}
 
 | Type                   | Acronym | Definition/Explanation                                                                                                          |
-|----------------|----------------|----------------------------------------|
+|-----------------|-----------------|--------------------------------------|
 | clinical               | CSR     | Clinical study report                                                                                                           |
 | clinical               | SDTM    | standard data tabulation model                                                                                                  |
 | clinical               | ADaM    | Analysis dataset model                                                                                                          |
@@ -191,7 +191,7 @@ Section 11.1, Data Sets Analyzed
 
 ## Writing functions
 
-> \"You should consider writing a function whenever you\'ve copied and pasted a block of code more than twice\"
+> "You should consider writing a function whenever you've copied and pasted a block of code more than twice"
 >
 > \- [R for Data Science](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function)
 
@@ -216,7 +216,9 @@ fmt_num <- function(x, digits, width = digits + 4) {
 With helper functions `count_by` and `fmt_num` we can more easily prepare the dataset for a summary of analysis sets table with the following steps:\
 \
 
-Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function. \
+Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
 Step 2+: Format the output from Step 2 using r2rtf.
+
+## Chapter 4: 
 
 # Clinical Trial Project (June 15, 2023) {style="text-align: center;"}
