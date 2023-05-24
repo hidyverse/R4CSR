@@ -219,6 +219,6 @@ With helper functions `count_by` and `fmt_num` we can more easily prepare the da
 Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
 Step 2+: Format the output from Step 2 using r2rtf.
 
-## Chapter 4: 
+## Chapter 4: This Chapter
 
 # Clinical Trial Project (June 15, 2023) {style="text-align: center;"}
