@@ -36,6 +36,7 @@ install.packages(c(
                     "dplyr"   # Manipulate data
                   , "r2rtf" # Reporting in RTF format
                   , "tidyr" # Manipulate data
+                  , "table1" #Transfer data
                        ))
 ```
 
