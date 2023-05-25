@@ -226,9 +226,13 @@ Section 11.2 Demographic and other baseline characteristics
 
 > Creating a simple table to summarize critical demographic and baseline characteristics of the participants
 
-R package {table1} efficiently summarizes this information and creates a HTML report
+## R package {table1} 
+Efficiently summarizes this information and creates a HTML report
 
 ```{r}
+#| eval: false
+#| echo: true
+
 ana <- adsl %>%
   mutate(
     SEX = factor(SEX, c("F", "M"), c("Female", "Male")),
@@ -244,6 +248,9 @@ tbl
 Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies
 
 ```{r}
+#| eval: false
+#| echo: true
+
 
 tbl_base <- tbl %>%
   as.data.frame() %>%
@@ -264,6 +271,9 @@ tbl_base
 Adjusting columns, headers, and indention.
 
 ```{r}
+#| eval: false
+#| echo: true
+
 colheader1 <- paste(names(tbl_base), collapse = "|")
 colheader2 <- paste(tbl_base[1, ], collapse = "|")
 rel_width <- c(2.5, rep(1, 4))
@@ -300,6 +310,5 @@ Step 2: Use package {table1}
 Step 3: Transfer the output from Step 2 into a data frame that only contains ASCII characters.
 
 Step 4: Define the format of the RTF table by using the R package r2rtf
-
 
 # Clinical Trial Project (June 15, 2023) {style="text-align: center;"}
