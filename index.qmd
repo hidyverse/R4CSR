@@ -42,7 +42,7 @@ install.packages(c(
 ## Living list of acronyms {.scrollable}
 
 | Type                   | Acronym | Definition/Explanation                                                                                                          |
-|-----------------|-----------------|--------------------------------------|
+|-------------------|-------------------|----------------------------------|
 | clinical               | CSR     | Clinical study report                                                                                                           |
 | clinical               | SDTM    | standard data tabulation model                                                                                                  |
 | clinical               | ADaM    | Analysis dataset model                                                                                                          |
@@ -219,6 +219,86 @@ With helper functions `count_by` and `fmt_num` we can more easily prepare the da
 Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
 Step 2+: Format the output from Step 2 using r2rtf.
 
-## Chapter 4: This Chapter
+# Chapter 4: Baseline characteristics
+
+Section 11.2 Demographic and other baseline characteristics
+
+> Creating a simple table to summarize critical demographic and baseline characteristics of the participants
+
+R package {table1} efficiently summarizes this information and creates a HTML report
+
+```{r}
+ana <- adsl %>%
+  mutate(
+    SEX = factor(SEX, c("F", "M"), c("Female", "Male")),
+    RACE = toTitleCase(tolower(RACE))
+  )
+
+tbl <- table1(~ SEX + AGE + RACE | TRT01P, data = ana)
+tbl
+```
+
+## Transferring the data
+
+Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies
+
+```{r}
+
+tbl_base <- tbl %>%
+  as.data.frame() %>%
+  as_tibble() %>%
+  mutate(across(
+    everything(),
+    ~ str_replace_all(.x, intToUtf8(160), " ")
+  ))
+
+
+names(tbl_base) <- str_replace_all(names(tbl_base), intToUtf8(160), " ")
+tbl_base
+
+```
+
+## Final Formatting
+
+Adjusting columns, headers, and indention.
+
+```{r}
+colheader1 <- paste(names(tbl_base), collapse = "|")
+colheader2 <- paste(tbl_base[1, ], collapse = "|")
+rel_width <- c(2.5, rep(1, 4))
+
+tbl_base[-1, ] %>%
+  rtf_title(
+    "Baseline Characteristics of Participants",
+    "(All Participants Randomized)"
+  ) %>%
+  rtf_colheader(colheader1,
+    col_rel_width = rel_width
+  ) %>%
+  rtf_colheader(colheader2,
+    border_top = "",
+    col_rel_width = rel_width
+  ) %>%
+  rtf_body(
+    col_rel_width = rel_width,
+    text_justification = c("l", rep("c", 4)),
+    text_indent_first = -240,
+    text_indent_left = 180
+  ) %>%
+  rtf_encode() %>%
+  write_rtf("tlf/tlf_base.rtf")
+
+```
+
+## Summary of steps
+
+Step 1: Read the data set
+
+Step 2: Use package {table1}
+
+Step 3: Transfer the output from Step 2 into a data frame that only contains ASCII characters.
+
+Step 4: Define the format of the RTF table by using the R package r2rtf
+
 
 # Clinical Trial Project (June 15, 2023) {style="text-align: center;"}
