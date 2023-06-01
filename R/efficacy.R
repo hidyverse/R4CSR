@@ -11,8 +11,8 @@ library(r2rtf) # Reporting in RTF format
 library(emmeans) # LS mean estimation
 
 #### data store
-adsl <- read_sas("R/data/adsl.sas7bdat")
-adlb <- read_sas("R/data/adlbc.sas7bdat")
+adsl <- read_sas("R/data/adsl.sas7bdat") # observation data
+adlb <- read_sas("R/data/adlbc.sas7bdat") # feature data
 
 #### functions
 source("R/src/functions.R")
@@ -30,7 +30,11 @@ ana <- gluc %>%
   arrange(AVISITN) %>%
   mutate(AVISIT = factor(AVISIT, levels = unique(AVISIT)))
 
-#### imputate ####
+#### impute ####
+#! LOCF is for demonstration of imputation ONLY
+#! Read https://www.ncbi.nlm.nih.gov/books/NBK209904/pdf/Bookshelf_NBK209904.pdf
+#! for better imputation strategies
+
 ana_locf <- ana %>%
   group_by(USUBJID) %>%
   mutate(locf = AVISITN == max(AVISITN)) %>%
@@ -38,6 +42,7 @@ ana_locf <- ana %>%
 
 
 #### summarize data ####
+
 t11 <- gluc %>%
   filter(AVISITN %in% c(0, 24)) %>% ## summarize baseline and week 24
   group_by(TRTPN, TRTP, AVISITN) %>%
