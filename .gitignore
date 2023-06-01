@@ -51,3 +51,7 @@ rsconnect/
 # MacOS
 **/.DS_Store
 .Rproj.user
+
+# data
+R/data/*
+

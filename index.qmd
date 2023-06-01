@@ -8,13 +8,15 @@ editor: visual
 
 This is a slide deck summary of [R for Clinical Study Reporting and Submission](https://r4csr.org/)
 
-There are two main parts
+There are three main parts of the book:
 
 1.  TLFs: a simulation of individual contributions
 
 2.  Clinical trial projects: a simulation of project leadership
 
-[Join us!](https://datascience.arizona.edu/events/r-clinical-study-reporting)
+3.  eCTD submission: a simulation in package submission
+
+In this summer book club we will get to just the first part, TLFs. [Join us!](https://datascience.arizona.edu/events/r-clinical-study-reporting)
 
 ## Get R help at UArizona
 
@@ -24,9 +26,11 @@ There are two main parts
 
 -   R folder structure recommended
 
--   [CDISC pilot data](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets) will be used
+-   [CDISC pilot ](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets)[data](https://github.com/elong0527/r4csr/tree/main/data-adam) is used throughout
 
 -   R packages needed
+
+    -   not all packages are used in every chapter
 
 ```{r}
 #| eval: false
@@ -34,6 +38,8 @@ There are two main parts
 
 install.packages(c(
                     "dplyr"   # Manipulate data
+                  , "emmeans" # Least-square mean estimation  
+                  , "haven"  # import SAS data  
                   , "r2rtf" # Reporting in RTF format
                   , "tidyr" # Manipulate data
                   , "table1" #Transfer data
@@ -57,6 +63,7 @@ install.packages(c(
 | clinical               | adae    | Analysis dataset for adverse events                                                                                             |
 | clinical/computational | ADSL    | Subject-level analysis dataset                                                                                                  |
 | clinical/computational | ITT     | intention to treat (i.e. none of the patients are excluded and the patients are analyzed according to the randomization scheme) |
+| statistical            | ANCOVA  | Analysis of covariance                                                                                                          |
 
 # TLFs {style="text-align: center;"}
 
@@ -226,7 +233,8 @@ Section 11.2 Demographic and other baseline characteristics
 
 > Creating a simple table to summarize critical demographic and baseline characteristics of the participants
 
-## R package {table1} 
+## R package {table1}
+
 Efficiently summarizes this information and creates a HTML report
 
 ```{r}
@@ -311,4 +319,14 @@ Step 3: Transfer the output from Step 2 into a data frame that only contains ASC
 
 Step 4: Define the format of the RTF table by using the R package r2rtf
 
-# Clinical Trial Project (June 15, 2023) {style="text-align: center;"}
+# Chapter 5
+
+Section 11.4, Efficacy Results and Tabulations of Individual Participant
+
+> Summarizing primary and secondary endpoints
+
+## Imputation
+
+## ANCOVA
+
+## Efficacy tabulation steps
