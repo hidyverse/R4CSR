@@ -8,12 +8,12 @@ With this repository this recurring meeting will **collaboratively** create a su
 
 **May 11** introduction, preface, chapter 1
 
-**May 18** chapters 2-3
+**May 18** chapter 2
 
-**May 25** chapters 4-5
+**May 25** chapters 3-4
 
-**June 1** chapters 6-7
+**June 1** chapters 5
 
-**June 8** chapters 8-9
+**June 8** chapters 6-7
 
-**June 15** chapters 10-12
+**June 15** chapters 8-9
