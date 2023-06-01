@@ -7,7 +7,7 @@
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.269">
+  <meta name="generator" content="quarto-1.1.251">
 
   <title>R4CSR</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -386,23 +386,21 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
+<section id="title-slide" class="center">
   <h1 class="title">R4CSR</h1>
-
-<div class="quarto-title-authors">
-</div>
-
 </section>
+
 <section>
 <section id="book-club" class="title-slide slide level1 center">
 <h1>Book club</h1>
 <p>This is a slide deck summary of <a href="https://r4csr.org/">R for Clinical Study Reporting and Submission</a></p>
-<p>There are two main parts</p>
+<p>There are three main parts of the book:</p>
 <ol type="1">
 <li><p>TLFs: a simulation of individual contributions</p></li>
 <li><p>Clinical trial projects: a simulation of project leadership</p></li>
+<li><p>eCTD submission: a simulation in package submission</p></li>
 </ol>
-<p><a href="https://datascience.arizona.edu/events/r-clinical-study-reporting">Join us!</a></p>
+<p>In this summer book club we will get to just the first part, TLFs. <a href="https://datascience.arizona.edu/events/r-clinical-study-reporting">Join us!</a></p>
 </section>
 <section id="get-r-help-at-uarizona" class="slide level2">
 <h2>Get R help at UArizona</h2>
@@ -412,16 +410,21 @@
 <h2>Preface</h2>
 <ul>
 <li><p>R folder structure recommended</p></li>
-<li><p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets">CDISC pilot data</a> will be used</p></li>
-<li><p>R packages needed</p></li>
+<li><p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets">CDISC pilot</a><a href="https://github.com/elong0527/r4csr/tree/main/data-adam">data</a> is used throughout</p></li>
+<li><p>R packages needed</p>
+<ul>
+<li>not all packages are used in every chapter</li>
+</ul></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(</span>
 <span id="cb1-2"><a href="#cb1-2"></a>                    <span class="st">"dplyr"</span>   <span class="co"># Manipulate data</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>                  , <span class="st">"r2rtf"</span> <span class="co"># Reporting in RTF format</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>                  , <span class="st">"tidyr"</span> <span class="co"># Manipulate data</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>                  , <span class="st">"table1"</span> <span class="co">#Transfer data</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>                       ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3"></a>                  , <span class="st">"emmeans"</span> <span class="co"># Least-square mean estimation  </span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>                  , <span class="st">"haven"</span>  <span class="co"># import SAS data  </span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>                  , <span class="st">"r2rtf"</span> <span class="co"># Reporting in RTF format</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>                  , <span class="st">"tidyr"</span> <span class="co"># Manipulate data</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>                  , <span class="st">"table1"</span> <span class="co">#Transfer data</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>                       ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="living-list-of-acronyms" class="slide level2 scrollable">
@@ -504,6 +507,16 @@
 <td>clinical/computational</td>
 <td>ITT</td>
 <td>intention to treat (i.e.&nbsp;none of the patients are excluded and the patients are analyzed according to the randomization scheme)</td>
+</tr>
+<tr class="even">
+<td>statistical</td>
+<td>ANCOVA</td>
+<td>Analysis of covariance</td>
+</tr>
+<tr class="odd">
+<td>statistical</td>
+<td>LOCF</td>
+<td>last observation carried forward</td>
 </tr>
 </tbody>
 </table>
@@ -738,8 +751,56 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 <p>Step 3: Transfer the output from Step 2 into a data frame that only contains ASCII characters.</p>
 <p>Step 4: Define the format of the RTF table by using the R package r2rtf</p>
 </section></section>
-<section id="clinical-trial-project-june-15-2023" class="title-slide slide level1 center" style="text-align: center;">
-<h1>Clinical Trial Project (June 15, 2023)</h1>
+<section>
+<section id="chapter-5" class="title-slide slide level1 center">
+<h1>Chapter 5</h1>
+<p>Section 11.4, Efficacy Results and Tabulations of Individual Participant</p>
+<blockquote>
+<p>Summarizing primary and secondary endpoints</p>
+</blockquote>
+</section>
+<section id="efficacy-table" class="slide level2">
+<h2>Efficacy Table</h2>
+<p>Combines two informative tables</p>
+<ol type="1">
+<li><p>Summary of observed data</p>
+<ul>
+<li>at baseline, week 24, and change from baseline</li>
+</ul></li>
+<li><p>Pairwise comparisons with placebo</p></li>
+</ol>
+</section>
+<section id="imputation" class="slide level2 center">
+<h2>Imputation</h2>
+<p>Missing data are inevitable</p>
+<p>…why your data are missing can be highly informative</p>
+<p><br>
+</p>
+<div style="color: red;">
+<p>LOCF imputation is NOT a recommended imputation method</p>
+</div>
+<p><br>
+</p>
+<p>Read more about the <a href="https://www.ncbi.nlm.nih.gov/books/NBK209904/pdf/Bookshelf_NBK209904.pdf">prevention and treatment of missing data</a></p>
+</section>
+<section id="ancova" class="slide level2">
+<h2>ANCOVA</h2>
+<p>Analysis of covariance examines the realationship between an independent and dependent variable while controlling for a covariate</p>
+<ul>
+<li>Specifically, compare variance around means of different groups</li>
+</ul>
+<p>Use {emmeans} to calculate within and between group least square means</p>
+</section>
+<section id="efficacy-tabulation-steps" class="slide level2">
+<h2>Efficacy tabulation steps</h2>
+<p>Step 1: Impute the missing values. In this example, we name the <code>ana</code> dataset after imputation as <code>ana_locf</code>.</p>
+<p>Step 2: Calculate the mean and standard derivation of efficacy endpoint (i.e., <code>gluc</code>), and then format it into an RTF table.</p>
+<p>Step 3: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.</p>
+<p>Step 4: Combine the outputs from steps 4 and 5 by rows.</p>
+<p>Step 5+: Format the output from Step 4 using r2rtf.</p>
+</section></section>
+<section id="who-wants-to-help-with-ch.-6-7" class="title-slide slide level1 center">
+<h1>Who wants to help with Ch. 6-7?</h1>
 <div class="footer footer-default">
 
 </div>
@@ -961,15 +1022,12 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        // dispatch for htmlwidgets
-        function fireSlideEnter() {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
-        }
-
-        function fireSlideChanged(previousSlide, currentSlide) {
-          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -980,6 +1038,13 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
               window.jQuery(currentSlide).trigger("shown");
             }
           }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
         }
 
         // hookup for slidy
@@ -1031,24 +1096,7 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
         setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
-          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -1086,42 +1134,24 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
           return note.innerHTML;
         });
       }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
-          }
-        } else {
-          return undefined;
-        }
-      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
           });
-        }
+          return popup.innerHTML;
+        });
       }
     });
     </script>

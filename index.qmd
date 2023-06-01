@@ -64,6 +64,7 @@ install.packages(c(
 | clinical/computational | ADSL    | Subject-level analysis dataset                                                                                                  |
 | clinical/computational | ITT     | intention to treat (i.e. none of the patients are excluded and the patients are analyzed according to the randomization scheme) |
 | statistical            | ANCOVA  | Analysis of covariance                                                                                                          |
+| statistical            | LOCF    | last observation carried forward                                                                                                |
 
 # TLFs {style="text-align: center;"}
 
@@ -325,8 +326,50 @@ Section 11.4, Efficacy Results and Tabulations of Individual Participant
 
 > Summarizing primary and secondary endpoints
 
-## Imputation
+## Efficacy Table
+
+Combines two informative tables
+
+1.  Summary of observed data
+
+    -   at baseline, week 24, and change from baseline
+
+2.  Pairwise comparisons with placebo
+
+## Imputation {.center}
+
+Missing data are inevitable
+
+...why your data are missing can be highly informative
+
+\
+
+::: {style="color: red;"}
+LOCF imputation is NOT a recommended imputation method
+:::
+
+\
+
+Read more about the [prevention and treatment of missing data](https://www.ncbi.nlm.nih.gov/books/NBK209904/pdf/Bookshelf_NBK209904.pdf)
 
 ## ANCOVA
 
+Analysis of covariance examines the realationship between an independent and dependent variable while controlling for a covariate
+
+-   Specifically, compare variance around means of different groups
+
+Use {emmeans} to calculate within and between group least square means
+
 ## Efficacy tabulation steps
+
+Step 1: Impute the missing values. In this example, we name the `ana` dataset after imputation as `ana_locf`.
+
+Step 2: Calculate the mean and standard derivation of efficacy endpoint (i.e., `gluc`), and then format it into an RTF table.
+
+Step 3: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.
+
+Step 4: Combine the outputs from steps 4 and 5 by rows.
+
+Step 5+: Format the output from Step 4 using r2rtf.
+
+# Who wants to help with Ch. 6-7?
