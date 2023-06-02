@@ -4,11 +4,12 @@
 
 #### locker #####
 #### library
-library(haven) # Read SAS data
 library(dplyr) # Manipulate data
+library(emmeans) # LS mean estimation
+library(haven) # Read SAS data
 library(tidyr) # Manipulate data
 library(r2rtf) # Reporting in RTF format
-library(emmeans) # LS mean estimation
+
 
 #### data store
 adsl <- read_sas("R/data/adsl.sas7bdat") # observation data
@@ -21,7 +22,7 @@ source("R/src/functions.R")
 gluc <- adlb %>%
   left_join(adsl %>% select(USUBJID, EFFFL), by = "USUBJID") %>%
   # PARAMCD is parameter code and here we focus on Glucose (mg/dL)
-  filter(EFFFL == "Y" & PARAMCD == "GLUC") %>%
+  filter(EFFFL == "Y" & PARAMCD == "GLUC") %>% # choosing ROWs to include
   arrange(TRTPN) %>%
   mutate(TRTP = factor(TRTP, levels = unique(TRTP)))
 
@@ -42,6 +43,7 @@ ana_locf <- ana %>%
 
 
 #### summarize data ####
+### top table summaries
 
 t11 <- gluc %>%
   filter(AVISITN %in% c(0, 24)) %>% ## summarize baseline and week 24
@@ -81,7 +83,7 @@ t13 <- fit_within %>%
   mutate(ls = fmt_ci(emmean, lower.CL, upper.CL)) %>%
   select(TRTP, ls)
 
-
+#### pairwise testing
 fit_between <- pairs(fit_within, reverse = TRUE)
 
 t2 <- fit_between %>%
@@ -94,19 +96,20 @@ t2 <- fit_between %>%
     ),
     p = fmt_pval(p.value)
   ) %>%
-  filter(stringr::str_detect(contrast, "- Placebo")) %>%
-  select(contrast, ls, p)
+  filter(stringr::str_detect(contrast, "- Placebo")) %>% # keep
+  select(contrast, ls, p) # choose columns
 
 ### build report table ####
 ##### table 1  #####
 
+## step 1
 t1 <- cbind(
   t11 %>% ungroup() %>% select(TRTP, ends_with("0"), ends_with("24")),
   t12 %>% ungroup() %>% select(ends_with("chg")),
   t13 %>% ungroup() %>% select(ls)
 )
 
-
+### format to rich text
 t1_rtf <- t1 %>%
   data.frame() %>%
   rtf_title(c(
@@ -130,14 +133,14 @@ t1_rtf <- t1 %>%
     col_rel_width = c(2.5, rep(c(0.5, 1.5), 3), 2)
   ) %>%
   rtf_footnote(c(
-    "{^a}Based on an ANCOVA model after adjusting baseline value. LOCF approach is used to impute missing values.",
+    "{^a}Based on an ANCOVA model after adjusting baseline value of glucose. LOCF approach is used to impute missing values.",
     "ANCOVA = Analysis of Covariance, LOCF = Last Observation Carried Forward",
     "CI = Confidence Interval, LS = Least Squares, SD = Standard Deviation"
   ))
 
 # t1_rtf %>%
-#   rtf_encode() %>%
-#   write_rtf("tlf/tlf_eff1.rtf")
+#   rtf_encode() %>% # step 2
+#   write_rtf("tlf/tlf_eff1.rtf") # step 3
 
 ##### table 2 #####
 t2_rtf <- t2 %>%
@@ -150,6 +153,11 @@ t2_rtf <- t2 %>%
     col_rel_width = c(4.5, 4, 2)
   )
 
-t2_rtf %>%
-  rtf_encode() %>%
-  write_rtf("tlf/tlf_eff2.rtf")
+# t2_rtf %>%
+#   rtf_encode() %>% # step 2
+#   write_rtf("tlf/tlf_eff2.rtf") # save table to tlf folder
+
+## write out efficacy table
+list(t1_rtf, t2_rtf) %>%
+  rtf_encode() %>% # step 2
+  write_rtf("tlf/tlf_eff.rtf") # step 3
