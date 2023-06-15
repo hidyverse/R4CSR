@@ -6,7 +6,8 @@
 
 tlf_path <- c(
   "tlf/tlf_base_summarypops.rtf",
-  "tlf/intro-ae1.rtf"
+  "tlf/intro-ae1.rtf",
+  "tlf/tlf_spec_ae.rtf"
 )
 
 r2rtf::assemble_rtf(
@@ -19,5 +20,5 @@ r2rtf::assemble_rtf(
 r2rtf::assemble_docx(
   tlf_path,
   output = "tlf/rtf-combine-toggle.docx",
-  landscape = c(FALSE, FALSE)
+  landscape = c(FALSE, FALSE, TRUE)
 )
