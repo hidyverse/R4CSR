@@ -22,11 +22,15 @@ In this summer book club we will get to just the first part, TLFs. [Join us!](ht
 
 [Data & Visualization Drop-in](https://datascience.arizona.edu/events/data-viz-drop-0) hours \@ Main library
 
+[Data Science Institute workshops](https://datascience.arizona.edu/calendar)
+
+[CCT Data Science workshops](https://datascience.cct.arizona.edu/workshops)
+
 ## Preface
 
 -   R folder structure recommended
 
--   [CDISC pilot ](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets)[data](https://github.com/elong0527/r4csr/tree/main/data-adam) is used throughout
+-   [CDISC pilot](https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets)[data](https://github.com/elong0527/r4csr/tree/main/data-adam) is used throughout
 
 -   R packages needed
 
@@ -41,6 +45,7 @@ install.packages(c(
                   , "emmeans" # Least-square mean estimation  
                   , "haven"  # import SAS data  
                   , "r2rtf" # Reporting in RTF format
+                  , "survival" # kapplan meier curves
                   , "tidyr" # Manipulate data
                   , "table1" #Transfer data
                        ))
@@ -65,6 +70,8 @@ install.packages(c(
 | clinical/computational | ITT     | intention to treat (i.e. none of the patients are excluded and the patients are analyzed according to the randomization scheme) |
 | statistical            | ANCOVA  | Analysis of covariance                                                                                                          |
 | statistical            | LOCF    | last observation carried forward                                                                                                |
+| statistical            | K-M     | Kaplan Meier curve/estimate                                                                                                     |
+| clinical               | AEs     | adverse events                                                                                                                  |
 
 # TLFs {style="text-align: center;"}
 
@@ -204,8 +211,6 @@ Section 11.1, Data Sets Analyzed
 >
 > \- [R for Data Science](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function)
 
-\
-
 ```{r}
 #| eval: false
 #| echo: true
@@ -223,12 +228,11 @@ fmt_num <- function(x, digits, width = digits + 4) {
 ## Summary of analysis sets
 
 With helper functions `count_by` and `fmt_num` we can more easily prepare the dataset for a summary of analysis sets table with the following steps:\
-\
 
 Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
 Step 2+: Format the output from Step 2 using r2rtf.
 
-# Chapter 4: Baseline characteristics
+# Chapter 4
 
 Section 11.2 Demographic and other baseline characteristics
 
@@ -307,18 +311,15 @@ tbl_base[-1, ] %>%
   ) %>%
   rtf_encode() %>%
   write_rtf("tlf/tlf_base.rtf")
-
 ```
 
 ## Summary of steps
 
-Step 1: Read the data set
+Step 1: Use package {table1}
 
-Step 2: Use package {table1}
+Step 2: Transfer the output from Step 1 into an ASCII data frame
 
-Step 3: Transfer the output from Step 2 into a data frame that only contains ASCII characters.
-
-Step 4: Define the format of the RTF table by using the R package r2rtf
+Step 3: Define the format of the RTF table by using the R package r2rtf
 
 # Chapter 5
 
@@ -342,13 +343,9 @@ Missing data are inevitable
 
 ...why your data are missing can be highly informative
 
-\
-
 ::: {style="color: red;"}
 LOCF imputation is NOT a recommended imputation method
 :::
-
-\
 
 Read more about the [prevention and treatment of missing data](https://www.ncbi.nlm.nih.gov/books/NBK209904/pdf/Bookshelf_NBK209904.pdf)
 
@@ -372,4 +369,119 @@ Step 4: Combine the outputs from steps 4 and 5 by rows.
 
 Step 5+: Format the output from Step 4 using r2rtf.
 
-# Who wants to help with Ch. 6-7?
+# Chapter 6
+
+Section 11.4, Efficacy Results and Tabulations of Individual Participant
+
+> The primary and secondary efficacy endpoints need to be summarized for each treatment group
+
+## Survival Analysis
+
+aka time-to-event analysis
+
+analyses...expected duration of time of a given event
+
+A survival model analyzes the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).
+
+```{r}
+#| label: kmExample
+#| eval: false
+#| echo: true
+
+fit <- survfit(Surv(timeToEvent, 1 - censoredTime) ~ treatmentGroup, data = clinicalData)
+```
+
+## Efficacy figure steps
+
+Step 1: Define the analysis-ready dataset
+
+Step 2: Save figures into `png` files
+
+Step 3: Create RTF output
+
+# Chapter 7
+
+Section 12.2 Adverse event (AEs) summary
+
+> Summarize adverse eventing, the number of patients in each treatment group in whom the event occurred, and the rate of occurrence.
+
+## Pivot wider
+
+![](https://www.pipinghotdata.com/posts/2021-08-27-a-tidyverse-pivot-approach-to-data-preparation-in-r/gatherspread_modified.jpg){fig-alt="fuzzy monsters moving colorful rocks to demonstrate items in a dataframe moving between long and wide format" fig-align="center"}
+
+## AE summary steps
+
+Step 1: Summarize participants in population
+
+Step 2: Summarize participants in population by AE criteria of interest
+
+Step 3: Combine summaries
+
+Step 4: Format using r2rtf
+
+# Chapter 8 
+
+Section 12.2 Specific AEs
+
+> Report each adverse event, the number of patients in each treatment group in whom the event occurred, and the rate of occurrence.
+
+## `page` functions
+
+The AE table introduces us to two advanced table features:
+
+-   group content: AE can be summarized in multiple nested layers. (e.g., by system organ class (SOC, `AESOC`) and specific AE term (`AEDECOD`))
+
+    -   `page_by()`
+
+-   pagenization: there are many AE terms that can not be covered in one page. Column headers and SOC information need to be repeated on every page.
+
+    -   `pageby_row()`
+
+## AE tabulation steps
+
+Step 1: Count the number of participants by SOC and treatment arm
+
+Step 2: Count the number of participants in each AE term by SOC, AE term, and treatment arm
+
+Step 3: Count the number of participants in each arm as `t_pop`
+
+Step 4: Combine counts
+
+Step 5: Format the output by using r2rtf
+
+# Chapter 9 
+
+All TLFs are then assembled by
+
+1.  Combining RTF source code in individual files into one large RTF file.
+
+2.  Leveraging the `Toggle Fields` feature in Microsoft Word to embed RTF files using hyperlinks.
+
+## Combine source code
+
+```{r}
+#| label: assembleRTF1
+#| eval: false
+#| echo: true
+
+tlf_path <- c(
+  "tlf/tbl_disp.rtf", # Disposition table
+  "tlf/tlf_eff.rtf", # Efficacy table
+  "tlf/tlf_km.rtf" # K-M plot
+)
+
+r2rtf::assemble_rtf(
+  input = tlf_path,
+  output = "tlf/rtf-combine.rtf"
+)
+```
+
+## Leverage Microsoft Word
+
+-   Absolute paths
+
+![](https://networkencyclopedia.com/wp-content/uploads/2019/08/absolute-path.jpg){fig-alt="folder icons in a directory tree with numerous examples of absolute (from root) vs relative (to another folder) paths"}
+
+-   Alt + F9 to "Toggle Fields"
+
+# Thank you!! 

@@ -405,6 +405,8 @@
 <section id="get-r-help-at-uarizona" class="slide level2">
 <h2>Get R help at UArizona</h2>
 <p><a href="https://datascience.arizona.edu/events/data-viz-drop-0">Data &amp; Visualization Drop-in</a> hours @ Main library</p>
+<p><a href="https://datascience.arizona.edu/calendar">Data Science Institute workshops</a></p>
+<p><a href="https://datascience.cct.arizona.edu/workshops">CCT Data Science workshops</a></p>
 </section>
 <section id="preface" class="slide level2">
 <h2>Preface</h2>
@@ -422,9 +424,10 @@
 <span id="cb1-3"><a href="#cb1-3"></a>                  , <span class="st">"emmeans"</span> <span class="co"># Least-square mean estimation  </span></span>
 <span id="cb1-4"><a href="#cb1-4"></a>                  , <span class="st">"haven"</span>  <span class="co"># import SAS data  </span></span>
 <span id="cb1-5"><a href="#cb1-5"></a>                  , <span class="st">"r2rtf"</span> <span class="co"># Reporting in RTF format</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>                  , <span class="st">"tidyr"</span> <span class="co"># Manipulate data</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>                  , <span class="st">"table1"</span> <span class="co">#Transfer data</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>                       ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6"></a>                  , <span class="st">"survival"</span> <span class="co"># kapplan meier curves</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>                  , <span class="st">"tidyr"</span> <span class="co"># Manipulate data</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>                  , <span class="st">"table1"</span> <span class="co">#Transfer data</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>                       ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="living-list-of-acronyms" class="slide level2 scrollable">
@@ -517,6 +520,16 @@
 <td>statistical</td>
 <td>LOCF</td>
 <td>last observation carried forward</td>
+</tr>
+<tr class="even">
+<td>statistical</td>
+<td>K-M</td>
+<td>Kaplan Meier curve/estimate</td>
+</tr>
+<tr class="odd">
+<td>clinical</td>
+<td>AEs</td>
+<td>adverse events</td>
 </tr>
 </tbody>
 </table>
@@ -655,8 +668,6 @@
 <p>“You should consider writing a function whenever you’ve copied and pasted a block of code more than twice”</p>
 <p>- <a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function">R for Data Science</a></p>
 </blockquote>
-<p><br>
-</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fmt_num <span class="ot">&lt;-</span> <span class="cf">function</span>(x, digits, <span class="at">width =</span> digits <span class="sc">+</span> <span class="dv">4</span>) {</span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">formatC</span>(x,</span>
@@ -670,14 +681,13 @@
 <section id="summary-of-analysis-sets" class="slide level2">
 <h2>Summary of analysis sets</h2>
 <p>With helper functions <code>count_by</code> and <code>fmt_num</code> we can more easily prepare the dataset for a summary of analysis sets table with the following steps:<br>
-<br>
 </p>
 <p>Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the <code>count_by()</code> function.<br>
 Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section></section>
 <section>
-<section id="chapter-4-baseline-characteristics" class="title-slide slide level1 center">
-<h1>Chapter 4: Baseline characteristics</h1>
+<section id="chapter-4" class="title-slide slide level1 center">
+<h1>Chapter 4</h1>
 <p>Section 11.2 Demographic and other baseline characteristics</p>
 <blockquote>
 <p>Creating a simple table to summarize critical demographic and baseline characteristics of the participants</p>
@@ -746,10 +756,9 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="summary-of-steps" class="slide level2">
 <h2>Summary of steps</h2>
-<p>Step 1: Read the data set</p>
-<p>Step 2: Use package {table1}</p>
-<p>Step 3: Transfer the output from Step 2 into a data frame that only contains ASCII characters.</p>
-<p>Step 4: Define the format of the RTF table by using the R package r2rtf</p>
+<p>Step 1: Use package {table1}</p>
+<p>Step 2: Transfer the output from Step 1 into an ASCII data frame</p>
+<p>Step 3: Define the format of the RTF table by using the R package r2rtf</p>
 </section></section>
 <section>
 <section id="chapter-5" class="title-slide slide level1 center">
@@ -774,13 +783,9 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 <h2>Imputation</h2>
 <p>Missing data are inevitable</p>
 <p>…why your data are missing can be highly informative</p>
-<p><br>
-</p>
 <div style="color: red;">
 <p>LOCF imputation is NOT a recommended imputation method</p>
 </div>
-<p><br>
-</p>
 <p>Read more about the <a href="https://www.ncbi.nlm.nih.gov/books/NBK209904/pdf/Bookshelf_NBK209904.pdf">prevention and treatment of missing data</a></p>
 </section>
 <section id="ancova" class="slide level2">
@@ -799,8 +804,114 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 <p>Step 4: Combine the outputs from steps 4 and 5 by rows.</p>
 <p>Step 5+: Format the output from Step 4 using r2rtf.</p>
 </section></section>
-<section id="who-wants-to-help-with-ch.-6-7" class="title-slide slide level1 center">
-<h1>Who wants to help with Ch. 6-7?</h1>
+<section>
+<section id="chapter-6" class="title-slide slide level1 center">
+<h1>Chapter 6</h1>
+<p>Section 11.4, Efficacy Results and Tabulations of Individual Participant</p>
+<blockquote>
+<p>The primary and secondary efficacy endpoints need to be summarized for each treatment group</p>
+</blockquote>
+</section>
+<section id="survival-analysis" class="slide level2">
+<h2>Survival Analysis</h2>
+<p>aka time-to-event analysis</p>
+<p>analyses…expected duration of time of a given event</p>
+<p>A survival model analyzes the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timeToEvent, <span class="dv">1</span> <span class="sc">-</span> censoredTime) <span class="sc">~</span> treatmentGroup, <span class="at">data =</span> clinicalData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="efficacy-figure-steps" class="slide level2">
+<h2>Efficacy figure steps</h2>
+<p>Step 1: Define the analysis-ready dataset</p>
+<p>Step 2: Save figures into <code>png</code> files</p>
+<p>Step 3: Create RTF output</p>
+</section></section>
+<section>
+<section id="chapter-7" class="title-slide slide level1 center">
+<h1>Chapter 7</h1>
+<p>Section 12.2 Adverse event (AEs) summary</p>
+<blockquote>
+<p>Summarize adverse eventing, the number of patients in each treatment group in whom the event occurred, and the rate of occurrence.</p>
+</blockquote>
+</section>
+<section id="pivot-wider" class="slide level2">
+<h2>Pivot wider</h2>
+
+<img data-src="https://www.pipinghotdata.com/posts/2021-08-27-a-tidyverse-pivot-approach-to-data-preparation-in-r/gatherspread_modified.jpg" alt="fuzzy monsters moving colorful rocks to demonstrate items in a dataframe moving between long and wide format" class="r-stretch quarto-figure-center"></section>
+<section id="ae-summary-steps" class="slide level2">
+<h2>AE summary steps</h2>
+<p>Step 1: Summarize participants in population</p>
+<p>Step 2: Summarize participants in population by AE criteria of interest</p>
+<p>Step 3: Combine summaries</p>
+<p>Step 4: Format using r2rtf</p>
+</section></section>
+<section>
+<section id="chapter-8" class="title-slide slide level1 center">
+<h1>Chapter 8</h1>
+<p>Section 12.2 Specific AEs</p>
+<blockquote>
+<p>Report each adverse event, the number of patients in each treatment group in whom the event occurred, and the rate of occurrence.</p>
+</blockquote>
+</section>
+<section id="page-functions" class="slide level2">
+<h2><code>page</code> functions</h2>
+<p>The AE table introduces us to two advanced table features:</p>
+<ul>
+<li><p>group content: AE can be summarized in multiple nested layers. (e.g., by system organ class (SOC, <code>AESOC</code>) and specific AE term (<code>AEDECOD</code>))</p>
+<ul>
+<li><code>page_by()</code></li>
+</ul></li>
+<li><p>pagenization: there are many AE terms that can not be covered in one page. Column headers and SOC information need to be repeated on every page.</p>
+<ul>
+<li><code>pageby_row()</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="ae-tabulation-steps" class="slide level2">
+<h2>AE tabulation steps</h2>
+<p>Step 1: Count the number of participants by SOC and treatment arm</p>
+<p>Step 2: Count the number of participants in each AE term by SOC, AE term, and treatment arm</p>
+<p>Step 3: Count the number of participants in each arm as <code>t_pop</code></p>
+<p>Step 4: Combine counts</p>
+<p>Step 5: Format the output by using r2rtf</p>
+</section></section>
+<section>
+<section id="chapter-9" class="title-slide slide level1 center">
+<h1>Chapter 9</h1>
+<p>All TLFs are then assembled by</p>
+<ol type="1">
+<li><p>Combining RTF source code in individual files into one large RTF file.</p></li>
+<li><p>Leveraging the <code>Toggle Fields</code> feature in Microsoft Word to embed RTF files using hyperlinks.</p></li>
+</ol>
+</section>
+<section id="combine-source-code" class="slide level2">
+<h2>Combine source code</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>tlf_path <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="st">"tlf/tbl_disp.rtf"</span>, <span class="co"># Disposition table</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="st">"tlf/tlf_eff.rtf"</span>, <span class="co"># Efficacy table</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="st">"tlf/tlf_km.rtf"</span> <span class="co"># K-M plot</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>)</span>
+<span id="cb10-6"><a href="#cb10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7"></a>r2rtf<span class="sc">::</span><span class="fu">assemble_rtf</span>(</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="at">input =</span> tlf_path,</span>
+<span id="cb10-9"><a href="#cb10-9"></a>  <span class="at">output =</span> <span class="st">"tlf/rtf-combine.rtf"</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="leverage-microsoft-word" class="slide level2">
+<h2>Leverage Microsoft Word</h2>
+<ul>
+<li>Absolute paths</li>
+</ul>
+
+<img data-src="https://networkencyclopedia.com/wp-content/uploads/2019/08/absolute-path.jpg" alt="folder icons in a directory tree with numerous examples of absolute (from root) vs relative (to another folder) paths" class="r-stretch"><ul>
+<li>Alt + F9 to “Toggle Fields”</li>
+</ul>
+</section></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>Thank you!!</h1>
 <div class="footer footer-default">
 
 </div>
