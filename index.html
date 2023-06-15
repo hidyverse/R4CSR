@@ -597,12 +597,12 @@
 </section>
 <section id="disposition" class="slide level2">
 <h2>Disposition</h2>
-<p>Step 1: Count participants in the analysis population</p>
-<p>Step 2: Calculate the number and percentage of participants who discontinued the study by treatment arm</p>
-<p>Step 3: Calculate the numbers and percentages of participants who discontinued the study for different reasons, by treatment arm</p>
-<p>Step 4: Calculate the number and percentage of participants who completed the study, by treatment arm</p>
-<p>Step 5: Bind <code>n_rand</code>, <code>n_disc</code>, <code>n_reason</code>, and <code>n_complete</code> by row.</p>
-<p>Step 6+: Write the final table to RTF</p>
+<p><strong>Step 1</strong>: Count participants in the analysis population</p>
+<p><strong>Step 2</strong>: Calculate the number and percentage of participants who discontinued the study by treatment arm</p>
+<p><strong>Step 3</strong>: Calculate the numbers and percentages of participants who discontinued the study for different reasons, by treatment arm</p>
+<p><strong>Step 4</strong>: Calculate the number and percentage of participants who completed the study, by treatment arm</p>
+<p><strong>Step 5</strong>: Bind <code>n_rand</code>, <code>n_disc</code>, <code>n_reason</code>, and <code>n_complete</code> by row.</p>
+<p><strong>Step 6+</strong>: Write the final table to RTF</p>
 </section>
 <section id="disposition-of-participants-rtf" class="slide level2">
 <h2>Disposition of participants RTF</h2>
@@ -663,6 +663,8 @@
 <p>“You should consider writing a function whenever you’ve copied and pasted a block of code more than twice”</p>
 <p>- <a href="https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function">R for Data Science</a></p>
 </blockquote>
+<p><br>
+</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fmt_num <span class="ot">&lt;-</span> <span class="cf">function</span>(x, digits, <span class="at">width =</span> digits <span class="sc">+</span> <span class="dv">4</span>) {</span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">formatC</span>(x,</span>
@@ -676,9 +678,10 @@
 <section id="summary-of-analysis-sets" class="slide level2">
 <h2>Summary of analysis sets</h2>
 <p>With helper functions <code>count_by</code> and <code>fmt_num</code> we can more easily prepare the dataset for a summary of analysis sets table with the following steps:<br>
+<br>
 </p>
-<p>Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the <code>count_by()</code> function.<br>
-Step 2+: Format the output from Step 2 using r2rtf.</p>
+<p><strong>Step 1</strong>: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the <code>count_by()</code> function.<br>
+<strong>Step 2+</strong>: Format the output from Step 2 using r2rtf.</p>
 </section></section>
 <section>
 <section id="chapter-4" class="title-slide slide level1 center">
@@ -690,7 +693,10 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="r-package-table1" class="slide level2">
 <h2>R package {table1}</h2>
-<p>Efficiently summarizes this information and creates a HTML report</p>
+<p>Efficiently summarizes this information and creates a HTML report<br>
+<br>
+<br>
+</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>ana <span class="ot">&lt;-</span> adsl <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(</span>
@@ -704,7 +710,9 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="transferring-the-data" class="slide level2">
 <h2>Transferring the data</h2>
-<p>Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies</p>
+<p>Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies<br>
+<br>
+</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>tbl_base <span class="ot">&lt;-</span> tbl <span class="sc">%&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
@@ -751,9 +759,9 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="summary-of-steps" class="slide level2">
 <h2>Summary of steps</h2>
-<p>Step 1: Use package {table1}</p>
-<p>Step 2: Transfer the output from Step 1 into an ASCII data frame</p>
-<p>Step 3: Define the format of the RTF table by using the R package r2rtf</p>
+<p><strong>Step 1</strong>: Use package {table1}</p>
+<p><strong>Step 2</strong>: Transfer the output from Step 1 into an ASCII data frame</p>
+<p><strong>Step 3+</strong>: Define the format of the RTF table</p>
 </section></section>
 <section>
 <section id="chapter-5" class="title-slide slide level1 center">
@@ -793,11 +801,11 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="efficacy-tabulation-steps" class="slide level2">
 <h2>Efficacy tabulation steps</h2>
-<p>Step 1: Impute the missing values. In this example, we name the <code>ana</code> dataset after imputation as <code>ana_locf</code>.</p>
-<p>Step 2: Calculate the mean and standard derivation of efficacy endpoint (i.e., <code>gluc</code>), and then format it into an RTF table.</p>
-<p>Step 3: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.</p>
-<p>Step 4: Combine the outputs from steps 4 and 5 by rows.</p>
-<p>Step 5+: Format the output from Step 4 using r2rtf.</p>
+<p><strong>Step 1</strong>: Impute the missing values. In this example, we name the <code>ana</code> dataset after imputation as <code>ana_locf</code>.</p>
+<p><strong>Step 2</strong>: Calculate the mean and standard derivation of efficacy endpoint (i.e., <code>gluc</code>), and then format it into an RTF table.</p>
+<p><strong>Step 3</strong>: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.</p>
+<p><strong>Step 4</strong>: Combine the outputs from steps 4 and 5 by rows.</p>
+<p><strong>Step 5+</strong>: Format the output from Step 4 using r2rtf.</p>
 </section></section>
 <section>
 <section id="chapter-6" class="title-slide slide level1 center">
@@ -809,18 +817,22 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="survival-analysis" class="slide level2">
 <h2>Survival Analysis</h2>
-<p>aka time-to-event analysis</p>
-<p>analyses…expected duration of time of a given event</p>
-<p>A survival model analyzes the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).</p>
+<p><strong>aka time-to-event analysis</strong></p>
+<p><br>
+</p>
+<p>A survival model explores the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).</p>
+<p><br>
+</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timeToEvent, <span class="dv">1</span> <span class="sc">-</span> censoredTime) <span class="sc">~</span> treatmentGroup, <span class="at">data =</span> clinicalData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(timeToEvent, <span class="dv">1</span> <span class="sc">-</span> censoredTime) <span class="sc">~</span> treatmentGroup</span>
+<span id="cb9-2"><a href="#cb9-2"></a>               , <span class="at">data =</span> clinicalData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="efficacy-figure-steps" class="slide level2">
 <h2>Efficacy figure steps</h2>
-<p>Step 1: Define the analysis-ready dataset</p>
-<p>Step 2: Save figures into <code>png</code> files</p>
-<p>Step 3: Create RTF output</p>
+<p><strong>Step 1</strong>: Define the analysis-ready dataset</p>
+<p><strong>Step 2</strong>: Save figures into <code>png</code> files</p>
+<p><strong>Step 3+</strong>: Create RTF output</p>
 </section></section>
 <section>
 <section id="chapter-7" class="title-slide slide level1 center">
@@ -836,10 +848,10 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 <img data-src="https://www.pipinghotdata.com/posts/2021-08-27-a-tidyverse-pivot-approach-to-data-preparation-in-r/gatherspread_modified.jpg" alt="fuzzy monsters moving colorful rocks to demonstrate items in a dataframe moving between long and wide format" class="r-stretch quarto-figure-center"></section>
 <section id="ae-summary-steps" class="slide level2">
 <h2>AE summary steps</h2>
-<p>Step 1: Summarize participants in population</p>
-<p>Step 2: Summarize participants in population by AE criteria of interest</p>
-<p>Step 3: Combine summaries</p>
-<p>Step 4: Format using r2rtf</p>
+<p><strong>Step 1</strong>: Summarize participants in population</p>
+<p><strong>Step 2</strong>: Summarize participants in population by AE criteria of interest</p>
+<p><strong>Step 3</strong>: Combine summaries</p>
+<p><strong>Step 4+</strong>: Format using r2rtf</p>
 </section></section>
 <section>
 <section id="chapter-8" class="title-slide slide level1 center">
@@ -865,11 +877,11 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="ae-tabulation-steps" class="slide level2">
 <h2>AE tabulation steps</h2>
-<p>Step 1: Count the number of participants by SOC and treatment arm</p>
-<p>Step 2: Count the number of participants in each AE term by SOC, AE term, and treatment arm</p>
-<p>Step 3: Count the number of participants in each arm as <code>t_pop</code></p>
-<p>Step 4: Combine counts</p>
-<p>Step 5: Format the output by using r2rtf</p>
+<p><strong>Step 1</strong>: Count the number of participants by SOC and treatment arm</p>
+<p><strong>Step 2</strong>: Count the number of participants in each AE term by SOC, AE term, and treatment arm</p>
+<p><strong>Step 3</strong>: Count the number of participants in each arm</p>
+<p><strong>Step 4</strong>: Combine counts</p>
+<p><strong>Step 5+</strong>: Format the output by using r2rtf</p>
 </section></section>
 <section>
 <section id="chapter-9" class="title-slide slide level1 center">
@@ -882,6 +894,8 @@ Step 2+: Format the output from Step 2 using r2rtf.</p>
 </section>
 <section id="combine-source-code" class="slide level2">
 <h2>Combine source code</h2>
+<p><br>
+</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>tlf_path <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="st">"tlf/tbl_disp.rtf"</span>, <span class="co"># Disposition table</span></span>

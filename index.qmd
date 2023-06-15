@@ -140,17 +140,17 @@ Section 10.1, Disposition of Participants
 
 ## Disposition
 
-Step 1: Count participants in the analysis population
+**Step 1**: Count participants in the analysis population
 
-Step 2: Calculate the number and percentage of participants who discontinued the study by treatment arm
+**Step 2**: Calculate the number and percentage of participants who discontinued the study by treatment arm
 
-Step 3: Calculate the numbers and percentages of participants who discontinued the study for different reasons, by treatment arm
+**Step 3**: Calculate the numbers and percentages of participants who discontinued the study for different reasons, by treatment arm
 
-Step 4: Calculate the number and percentage of participants who completed the study, by treatment arm
+**Step 4**: Calculate the number and percentage of participants who completed the study, by treatment arm
 
-Step 5: Bind `n_rand`, `n_disc`, `n_reason`, and `n_complete` by row.
+**Step 5**: Bind `n_rand`, `n_disc`, `n_reason`, and `n_complete` by row.
 
-Step 6+: Write the final table to RTF
+**Step 6+**: Write the final table to RTF
 
 ## Disposition of participants RTF
 
@@ -209,6 +209,8 @@ Section 11.1, Data Sets Analyzed
 >
 > \- [R for Data Science](https://r4ds.had.co.nz/functions.html#when-should-you-write-a-function)
 
+\
+
 ```{r}
 #| eval: false
 #| echo: true
@@ -226,9 +228,10 @@ fmt_num <- function(x, digits, width = digits + 4) {
 ## Summary of analysis sets
 
 With helper functions `count_by` and `fmt_num` we can more easily prepare the dataset for a summary of analysis sets table with the following steps:\
+\
 
-Step 1: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
-Step 2+: Format the output from Step 2 using r2rtf.
+**Step 1**: Bind the counts/percentages of the ITT population, the efficacy population, and the safety population by row using the `count_by()` function.\
+**Step 2+**: Format the output from Step 2 using r2rtf.
 
 # Chapter 4
 
@@ -238,7 +241,9 @@ Section 11.2 Demographic and other baseline characteristics
 
 ## R package {table1}
 
-Efficiently summarizes this information and creates a HTML report
+Efficiently summarizes this information and creates a HTML report\
+\
+\
 
 ```{r}
 #| eval: false
@@ -256,7 +261,8 @@ tbl
 
 ## Transferring the data
 
-Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies
+Transferring the output into a dataframe that contains only ASCII characters, recommended by regulatory agencies\
+\
 
 ```{r}
 #| eval: false
@@ -313,11 +319,11 @@ tbl_base[-1, ] %>%
 
 ## Summary of steps
 
-Step 1: Use package {table1}
+**Step 1**: Use package {table1}
 
-Step 2: Transfer the output from Step 1 into an ASCII data frame
+**Step 2**: Transfer the output from Step 1 into an ASCII data frame
 
-Step 3: Define the format of the RTF table by using the R package r2rtf
+**Step 3+**: Define the format of the RTF table
 
 # Chapter 5
 
@@ -357,15 +363,15 @@ Use {emmeans} to calculate within and between group least square means
 
 ## Efficacy tabulation steps
 
-Step 1: Impute the missing values. In this example, we name the `ana` dataset after imputation as `ana_locf`.
+**Step 1**: Impute the missing values. In this example, we name the `ana` dataset after imputation as `ana_locf`.
 
-Step 2: Calculate the mean and standard derivation of efficacy endpoint (i.e., `gluc`), and then format it into an RTF table.
+**Step 2**: Calculate the mean and standard derivation of efficacy endpoint (i.e., `gluc`), and then format it into an RTF table.
 
-Step 3: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.
+**Step 3**: Calculate the pairwise comparison by ANCOVA model, and then format it into an RTF table.
 
-Step 4: Combine the outputs from steps 4 and 5 by rows.
+**Step 4**: Combine the outputs from steps 4 and 5 by rows.
 
-Step 5+: Format the output from Step 4 using r2rtf.
+**Step 5+**: Format the output from Step 4 using r2rtf.
 
 # Chapter 6
 
@@ -375,27 +381,30 @@ Section 11.4, Efficacy Results and Tabulations of Individual Participant
 
 ## Survival Analysis
 
-aka time-to-event analysis
+**aka time-to-event analysis**
 
-analyses...expected duration of time of a given event
+\
 
-A survival model analyzes the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).
+A survival model explores the relationship between an outcome variable and a censored estimate of time to study dropout (for any number of reasons).
+
+\
 
 ```{r}
 #| label: kmExample
 #| eval: false
 #| echo: true
 
-fit <- survfit(Surv(timeToEvent, 1 - censoredTime) ~ treatmentGroup, data = clinicalData)
+fit <- survfit(Surv(timeToEvent, 1 - censoredTime) ~ treatmentGroup
+               , data = clinicalData)
 ```
 
 ## Efficacy figure steps
 
-Step 1: Define the analysis-ready dataset
+**Step 1**: Define the analysis-ready dataset
 
-Step 2: Save figures into `png` files
+**Step 2**: Save figures into `png` files
 
-Step 3: Create RTF output
+**Step 3+**: Create RTF output
 
 # Chapter 7
 
@@ -409,13 +418,13 @@ Section 12.2 Adverse event (AEs) summary
 
 ## AE summary steps
 
-Step 1: Summarize participants in population
+**Step 1**: Summarize participants in population
 
-Step 2: Summarize participants in population by AE criteria of interest
+**Step 2**: Summarize participants in population by AE criteria of interest
 
-Step 3: Combine summaries
+**Step 3**: Combine summaries
 
-Step 4: Format using r2rtf
+**Step 4+**: Format using r2rtf
 
 # Chapter 8 
 
@@ -437,15 +446,15 @@ The AE table introduces us to two advanced table features:
 
 ## AE tabulation steps
 
-Step 1: Count the number of participants by SOC and treatment arm
+**Step 1**: Count the number of participants by SOC and treatment arm
 
-Step 2: Count the number of participants in each AE term by SOC, AE term, and treatment arm
+**Step 2**: Count the number of participants in each AE term by SOC, AE term, and treatment arm
 
-Step 3: Count the number of participants in each arm as `t_pop`
+**Step 3**: Count the number of participants in each arm
 
-Step 4: Combine counts
+**Step 4**: Combine counts
 
-Step 5: Format the output by using r2rtf
+**Step 5+**: Format the output by using r2rtf
 
 # Chapter 9 
 
@@ -456,6 +465,8 @@ All TLFs are then assembled by
 2.  Leveraging the `Toggle Fields` feature in Microsoft Word to embed RTF files using hyperlinks.
 
 ## Combine source code
+
+\
 
 ```{r}
 #| label: assembleRTF1
