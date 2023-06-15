@@ -73,8 +73,6 @@ install.packages(c(
 | statistical            | K-M     | Kaplan Meier curve/estimate                                                                                                     |
 | clinical               | AEs     | adverse events                                                                                                                  |
 
-# TLFs {style="text-align: center;"}
-
 # Chapter 1
 
 An overview of clinical study reports and the {r2rtf} package.
